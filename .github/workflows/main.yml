@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         environment: [dev]   # deploy to both environments
-    environment: ${{ matrix.environment }}
+    environment: dev
     env:
       DATABRICKS_HOST: ${{ secrets.DEV_DEPLOYMENT_TARGET_URL }}
       DATABRICKS_TOKEN: ${{ secrets.DEV_DEPLOYMENT_TOKEN }}
@@ -40,4 +40,4 @@ jobs:
       - name: Deploy Databricks bundle
         run: |
           cd $(dirname "${{ steps.bundle.outputs.bundle_path }}")
-          databricks bundle deploy -t ${{ matrix.environment }}
+          databricks bundle deploy -t dev
