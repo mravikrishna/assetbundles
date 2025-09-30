@@ -8,24 +8,36 @@ on:
       - main
 
 jobs:
-  deploy-dev:
+  deploy:
     runs-on: ubuntu-latest
-    environment: development
+    strategy:
+      matrix:
+        environment: [dev]   # deploy to both environments
+    environment: ${{ matrix.environment }}
     env:
-      DATABRICKS_HOST: ${{ secrets.DEV_DEPLOYMENT_TARGET_URL }}
-      DATABRICKS_TOKEN: ${{ secrets.DEV_DEPLOYMENT_TOKEN }}
+      DATABRICKS_HOST: ${{ secrets[format('{0}_DEPLOYMENT_TARGET_URL', matrix.environment | upper)] }}
+      DATABRICKS_TOKEN: ${{ secrets[format('{0}_DEPLOYMENT_TOKEN', matrix.environment | upper)] }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: 3.8
 
       - name: Set up Databricks CLI
         uses: databricks/setup-cli@main
 
-      - name: Deploy bundle to Dev
-        run: databricks bundle deploy -t dev
+      - name: Find bundle root
+        id: bundle
+        run: |
+          BUNDLE_PATH=$(find . -name "databricks.yml" -o -name "bundle.yml" | head -n 1)
+          echo "bundle_path=$BUNDLE_PATH" >> $GITHUB_OUTPUT
+          echo "Found bundle file at: $BUNDLE_PATH"
+
+      - name: Deploy Databricks bundle
+        run: |
+          cd $(dirname "${{ steps.bundle.outputs.bundle_path }}")
+          databricks bundle deploy -t ${{ matrix.environment }}
