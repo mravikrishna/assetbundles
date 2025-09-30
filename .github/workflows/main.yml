@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v3
@@ -35,12 +35,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env:
-      DATABRICKS_HOST: ${{ secrets.PROD_DEPLOYMENT_TARGET_URL }}
-      DATABRICKS_TOKEN: ${{ secrets.PROD_DEPLOYMENT_TOKEN }}
+      DATABRICKS_HOST: ${{ secrets.DEV_DEPLOYMENT_TARGET_URL }}
+      DATABRICKS_TOKEN: ${{ secrets.DEV_DEPLOYMENT_TOKEN }}
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v3
