@@ -15,8 +15,8 @@ jobs:
         environment: [dev]   # deploy to both environments
     environment: ${{ matrix.environment }}
     env:
-      DATABRICKS_HOST: ${{ secrets[format('{0}_DEPLOYMENT_TARGET_URL', matrix.environment | upper)] }}
-      DATABRICKS_TOKEN: ${{ secrets[format('{0}_DEPLOYMENT_TOKEN', matrix.environment | upper)] }}
+      DATABRICKS_HOST: ${{ secrets.DEV_DEPLOYMENT_TARGET_URL }}
+      DATABRICKS_TOKEN: ${{ secrets.DEV_DEPLOYMENT_TOKEN }}
 
     steps:
       - name: Checkout repository
