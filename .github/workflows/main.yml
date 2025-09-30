@@ -15,7 +15,7 @@ jobs:
     env:
       DATABRICKS_HOST: ${{ secrets.DEV_DEPLOYMENT_TARGET_URL }}
       DATABRICKS_TOKEN: ${{ secrets.DEV_DEPLOYMENT_TOKEN }}
-      REPO_PATH: /Workspace/Users/ravi.muthireddy@gmail.com/assetbundles/dev_dabproject 
+      REPO_PATH: /Workspace/Users/ravi.muthireddy@gmail.com/assetbundles/dabproject 
 
     steps:
       - name: Checkout repository
@@ -45,7 +45,7 @@ jobs:
     env:
       DATABRICKS_HOST: ${{ secrets.DEV_DEPLOYMENT_TARGET_URL }}
       DATABRICKS_TOKEN: ${{ secrets.DEV_DEPLOYMENT_TOKEN }}
-      REPO_PATH: /Workspace/Users/ravi.muthireddy@gmail.com/assetbundles/prod_dabproject
+      REPO_PATH: /Workspace/Users/ravi.muthireddy@gmail.com/assetbundles/prod/dabproject
 
     steps:
       - name: Checkout repository
